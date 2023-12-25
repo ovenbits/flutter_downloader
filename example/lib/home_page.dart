@@ -98,8 +98,7 @@ class _MyHomePageState extends State<MyHomePage> {
       'task ($id) is in status ($status) and process ($progress)',
     );
 
-    IsolateNameServer.lookupPortByName('downloader_send_port')
-        ?.send([id, status.value, progress]);
+    IsolateNameServer.lookupPortByName('downloader_send_port')?.send([id, status.value, progress]);
   }
 
   Widget _buildDownloadList() {
@@ -122,8 +121,7 @@ class _MyHomePageState extends State<MyHomePage> {
             final task = item.task;
             if (task == null) {
               return Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                 child: Text(
                   item.name!,
                   style: const TextStyle(
@@ -154,8 +152,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   _pauseDownload(task);
                 } else if (task.status == DownloadTaskStatus.paused) {
                   _resumeDownload(task);
-                } else if (task.status == DownloadTaskStatus.complete ||
-                    task.status == DownloadTaskStatus.canceled) {
+                } else if (task.status == DownloadTaskStatus.complete || task.status == DownloadTaskStatus.canceled) {
                   _delete(task);
                 } else if (task.status == DownloadTaskStatus.failed) {
                   _retryDownload(task);
@@ -193,7 +190,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 fontSize: 20,
               ),
             ),
-          )
+          ),
         ],
       ),
     );
@@ -300,8 +297,7 @@ class _MyHomePageState extends State<MyHomePage> {
     }
 
     _tasks!.addAll(
-      DownloadItems.images
-          .map((image) => TaskInfo(name: image.name, link: image.url)),
+      DownloadItems.images.map((image) => TaskInfo(name: image.name, link: image.url)),
     );
 
     _items.add(ItemHolder(name: 'Images'));
@@ -311,8 +307,7 @@ class _MyHomePageState extends State<MyHomePage> {
     }
 
     _tasks!.addAll(
-      DownloadItems.videos
-          .map((video) => TaskInfo(name: video.name, link: video.url)),
+      DownloadItems.videos.map((video) => TaskInfo(name: video.name, link: video.url)),
     );
 
     _items.add(ItemHolder(name: 'Videos'));
@@ -322,8 +317,7 @@ class _MyHomePageState extends State<MyHomePage> {
     }
 
     _tasks!.addAll(
-      DownloadItems.apks
-          .map((video) => TaskInfo(name: video.name, link: video.url)),
+      DownloadItems.apks.map((video) => TaskInfo(name: video.name, link: video.url)),
     );
 
     _items.add(ItemHolder(name: 'APKs'));
@@ -374,8 +368,7 @@ class _MyHomePageState extends State<MyHomePage> {
         externalStorageDirPath = directory?.path;
       }
     } else if (Platform.isIOS) {
-      externalStorageDirPath =
-          (await getApplicationDocumentsDirectory()).absolute.path;
+      externalStorageDirPath = (await getApplicationDocumentsDirectory()).absolute.path;
     }
     return externalStorageDirPath;
   }
@@ -403,7 +396,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                 ),
               ],
-            )
+            ),
         ],
       ),
       body: Builder(
@@ -412,9 +405,7 @@ class _MyHomePageState extends State<MyHomePage> {
             return const Center(child: CircularProgressIndicator());
           }
 
-          return _permissionReady
-              ? _buildDownloadList()
-              : _buildNoPermissionWarning();
+          return _permissionReady ? _buildDownloadList() : _buildNoPermissionWarning();
         },
       ),
     );

@@ -12,9 +12,9 @@ class DownloadListItem extends StatelessWidget {
   });
 
   final ItemHolder? data;
-  final Function(TaskInfo?)? onTap;
-  final Function(TaskInfo)? onActionTap;
-  final Function(TaskInfo)? onCancel;
+  final void Function(TaskInfo?)? onTap;
+  final void Function(TaskInfo)? onActionTap;
+  final void Function(TaskInfo)? onCancel;
 
   Widget? _buildTrailing(TaskInfo task) {
     if (task.status == DownloadTaskStatus.undefined) {
@@ -66,7 +66,7 @@ class DownloadListItem extends StatelessWidget {
             constraints: const BoxConstraints(minHeight: 32, minWidth: 32),
             icon: const Icon(Icons.delete),
             tooltip: 'Delete',
-          )
+          ),
         ],
       );
     } else if (task.status == DownloadTaskStatus.canceled) {
@@ -81,7 +81,7 @@ class DownloadListItem extends StatelessWidget {
               constraints: const BoxConstraints(minHeight: 32, minWidth: 32),
               icon: const Icon(Icons.cancel),
               tooltip: 'Cancel',
-            )
+            ),
         ],
       );
     } else if (task.status == DownloadTaskStatus.failed) {
@@ -95,7 +95,7 @@ class DownloadListItem extends StatelessWidget {
             constraints: const BoxConstraints(minHeight: 32, minWidth: 32),
             icon: const Icon(Icons.refresh, color: Colors.green),
             tooltip: 'Refresh',
-          )
+          ),
         ],
       );
     } else if (task.status == DownloadTaskStatus.enqueued) {
@@ -138,8 +138,7 @@ class DownloadListItem extends StatelessWidget {
                   ],
                 ),
               ),
-              if (data!.task!.status == DownloadTaskStatus.running ||
-                  data!.task!.status == DownloadTaskStatus.paused)
+              if (data!.task!.status == DownloadTaskStatus.running || data!.task!.status == DownloadTaskStatus.paused)
                 Positioned(
                   left: 0,
                   right: 0,
@@ -147,7 +146,7 @@ class DownloadListItem extends StatelessWidget {
                   child: LinearProgressIndicator(
                     value: data!.task!.progress! / 100,
                   ),
-                )
+                ),
             ],
           ),
         ),
