@@ -293,7 +293,9 @@ static void *isOnDatabaseQueueKey;
 {
     NSArray *args = @[@(_callbackHandle), taskId, status, progress];
     if (initialized && _callbackHandle != 0) {
-        [_callbackChannel invokeMethod:@"" arguments:args];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [_callbackChannel invokeMethod:@"" arguments:args];
+        });
     } else {
         [_eventQueue addObject:args];
     }
@@ -628,11 +630,13 @@ static void *isOnDatabaseQueueKey;
 - (void) unqueueStatusEvents {
     @synchronized (self) {
         // unqueue all pending download status events.
-        while ([_eventQueue count] > 0) {
-            NSArray* args = _eventQueue[0];
-            [_eventQueue removeObjectAtIndex:0];
-            [_callbackChannel invokeMethod:@"" arguments:@[@(_callbackHandle), args[1], args[2], args[3]]];
-        }
+        dispatch_async(dispatch_get_main_queue(), ^{
+            while ([_eventQueue count] > 0) {
+                NSArray* args = _eventQueue[0];
+                [_eventQueue removeObjectAtIndex:0];
+                [_callbackChannel invokeMethod:@"" arguments:@[@(_callbackHandle), args[1], args[2], args[3]]];
+            }
+        });
     }
 }
 
